@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode Toggle</title>
+    <style>
+        /* Default Light Mode Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background-color: #1a1a2e;
+            color: #eee;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+            max-width: 500px;
+        }
+
+        body.light-mode .container {
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .container {
+            background-color: #16213e;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .toggle-btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Light Mode Button */
+        body.light-mode .toggle-btn {
+            background-color: #333;
+            color: white;
+        }
+
+        body.light-mode .toggle-btn:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+        /* Dark Mode Button */
+        body.dark-mode .toggle-btn {
+            background-color: #e94560;
+            color: white;
+        }
+
+        body.dark-mode .toggle-btn:hover {
+            background-color: #ff6b6b;
+            transform: scale(1.05);
+        }
+
+        .status {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div class="container">
+        <div class="icon">🌙</div>
+        <h1>Dark Mode Toggle</h1>
+        <p>Click the button below to switch between light and dark themes.<br>Your preference will be saved and persist across page refreshes!</p>
+        <button class="toggle-btn" onclick="toggleTheme()">Switch to Dark Mode</button>
+        <p class="status">Current theme: <span id="theme-status">Light Mode</span></p>
+    </div>
+
+    <script>
+        // Function to toggle between dark and light mode
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.querySelector('.toggle-btn');
+            const status = document.getElementById('theme-status');
+            const icon = document.querySelector('.icon');
+
+            if (body.classList.contains('light-mode')) {
+                // Switch to dark mode
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                btn.textContent = 'Switch to Light Mode';
+                status.textContent = 'Dark Mode';
+                icon.textContent = '☀️';
+                
+                // Save to localStorage
+                localStorage.setItem('theme', 'dark');
+            } else {
+                // Switch to light mode
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                btn.textContent = 'Switch to Dark Mode';
+                status.textContent = 'Light Mode';
+                icon.textContent = '🌙';
+                
+                // Save to localStorage
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme from localStorage on page load
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const body = document.body;
+            const btn = document.querySelector('.toggle-btn');
+            const status = document.getElementById('theme-status');
+            const icon = document.querySelector('.icon');
+
+            if (savedTheme === 'dark') {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                btn.textContent = 'Switch to Light Mode';
+                status.textContent = 'Dark Mode';
+                icon.textContent = '☀️';
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                btn.textContent = 'Switch to Dark Mode';
+                status.textContent = 'Light Mode';
+                icon.textContent = '🌙';
+            }
+        }
+
+        // Initialize theme on page load
+        loadTheme();
+    </script>
+</body>
+</html>
+
