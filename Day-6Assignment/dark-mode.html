@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dark Mode Toggle</title>
     <style>
-        /* Default Light Mode Styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -18,13 +17,11 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Light Mode */
         body.light-mode {
             background-color: #f5f5f5;
             color: #333;
         }
 
-        /* Dark Mode */
         body.dark-mode {
             background-color: #1a1a2e;
             color: #eee;
@@ -72,7 +69,6 @@
             letter-spacing: 1px;
         }
 
-        /* Light Mode Button */
         body.light-mode .toggle-btn {
             background-color: #333;
             color: white;
@@ -83,7 +79,6 @@
             transform: scale(1.05);
         }
 
-        /* Dark Mode Button */
         body.dark-mode .toggle-btn {
             background-color: #e94560;
             color: white;
@@ -108,7 +103,6 @@
 </head>
 <body class="light-mode">
     <div class="container">
-        <div class="icon">🌙</div>
         <h1>Dark Mode Toggle</h1>
         <p>Click the button below to switch between light and dark themes.<br>Your preference will be saved and persist across page refreshes!</p>
         <button class="toggle-btn" onclick="toggleTheme()">Switch to Dark Mode</button>
@@ -129,7 +123,6 @@
                 body.classList.add('dark-mode');
                 btn.textContent = 'Switch to Light Mode';
                 status.textContent = 'Dark Mode';
-                icon.textContent = '☀️';
                 
                 // Save to localStorage
                 localStorage.setItem('theme', 'dark');
@@ -139,7 +132,6 @@
                 body.classList.add('light-mode');
                 btn.textContent = 'Switch to Dark Mode';
                 status.textContent = 'Light Mode';
-                icon.textContent = '🌙';
                 
                 // Save to localStorage
                 localStorage.setItem('theme', 'light');
