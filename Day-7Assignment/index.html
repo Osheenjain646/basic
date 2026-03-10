@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        input.valid {
+            border-color: #28a745;
+        }
+
+        input.invalid {
+            border-color: #dc3545;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+            user-select: none;
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 6px;
+            border-radius: 3px;
+            background: #e0e0e0;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .password-strength-text {
+            font-size: 12px;
+            margin-top: 6px;
+            text-align: right;
+        }
+
+        .strength-weak {
+            background: #dc3545;
+            width: 25%;
+        }
+
+        .strength-fair {
+            background: #ffc107;
+            width: 50%;
+        }
+
+        .strength-good {
+            background: #17a2b8;
+            width: 75%;
+        }
+
+        .strength-strong {
+            background: #28a745;
+            width: 100%;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .submissions-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .submissions-section h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .submissions-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .submission-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .submission-item strong {
+            color: #667eea;
+        }
+
+        .no-submissions {
+            color: #999;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registration Form</h1>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                <div class="error-message" id="nameError">Name must be at least 3 characters long</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                <div class="error-message" id="phoneError">Please enter a valid 10-digit phone number</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <span class="toggle-password" id="togglePassword">Show</span>
+                </div>
+                <div class="password-strength">
+                    <div class="password-strength-bar" id="strengthBar"></div>
+                </div>
+                <div class="password-strength-text" id="strengthText"></div>
+                <div class="error-message" id="passwordError">Password must be at least 8 characters</div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Register</button>
+        </form>
+
+        <div class="submissions-section">
+            <h2>Submissions</h2>
+            <div class="submissions-list" id="submissionsList">
+                <p class="no-submissions">No submissions yet</p>
+            </div>
+            <button class="clear-btn" id="clearBtn">Clear All</button>
+        </div>
+    </div>
+
+    <script>
+        // Eleemnts 
+        const form = document.getElementById('registrationForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthText = document.getElementById('strengthText');
+        const submissionsList = document.getElementById('submissionsList');
+        const clearBtn = document.getElementById('clearBtn');
+
+        // Errors 
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const phoneError = document.getElementById('phoneError');
+        const passwordError = document.getElementById('passwordError');
+
+        // Validations 
+        function validateName(name) {
+            return name.trim().length >= 3;
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validatePhone(phone) {
+            const phoneRegex = /^\d{10}$/;
+            return phoneRegex.test(phone.replace(/\s/g, ''));
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8;
+        }
+
+        function getPasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+
+            if (strength <= 1) return { level: 'weak', text: 'Weak', class: 'strength-weak' };
+            if (strength <= 2) return { level: 'fair', text: 'Fair', class: 'strength-fair' };
+            if (strength <= 3) return { level: 'good', text: 'Good', class: 'strength-good' };
+            return { level: 'strong', text: 'Strong', class: 'strength-strong' };
+        }
+
+        // Validation handlers 
+        nameInput.addEventListener('input', function() {
+            const isValid = validateName(this.value);
+            this.classList.toggle('valid', isValid && this.value.length > 0);
+            this.classList.toggle('invalid', !isValid && this.value.length > 0);
+            nameError.classList.toggle('show', !isValid && this.value.length > 0);
+        });
+
+        emailInput.addEventListener('input', function() {
+            const isValid = validateEmail(this.value);
+            this.classList.toggle('valid', isValid && this.value.length > 0);
+            this.classList.toggle('invalid', !isValid && this.value.length > 0);
+            emailError.classList.toggle('show', !isValid && this.value.length > 0);
+        });
+
+        phoneInput.addEventListener('input', function() {
+            const isValid = validatePhone(this.value);
+            this.classList.toggle('valid', isValid && this.value.length > 0);
+            this.classList.toggle('invalid', !isValid && this.value.length > 0);
+            phoneError.classList.toggle('show', !isValid && this.value.length > 0);
+        });
+
+        passwordInput.addEventListener('input', function() {
+            const isValid = validatePassword(this.value);
+            this.classList.toggle('valid', isValid && this.value.length > 0);
+            this.classList.toggle('invalid', !isValid && this.value.length > 0);
+            passwordError.classList.toggle('show', !isValid && this.value.length > 0);
+
+            if (this.value.length > 0) {
+                const strength = getPasswordStrength(this.value);
+                strengthBar.className = 'password-strength-bar ' + strength.class;
+                strengthText.textContent = strength.text;
+                strengthText.style.color = 
+                    strength.level === 'weak' ? '#dc3545' :
+                    strength.level === 'fair' ? '#ffc107' :
+                    strength.level === 'good' ? '#17a2b8' : '#28a745';
+            } else {
+                strengthBar.className = 'password-strength-bar';
+                strengthBar.style.width = '0';
+                strengthText.textContent = '';
+            }
+        });
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.textContent = type === 'password' ? 'Show' : 'Hide';
+        });
+
+        function getSubmissions() {
+            const submissions = localStorage.getItem('submissions');
+            return submissions ? JSON.parse(submissions) : [];
+        }
+
+        function saveSubmission(submission) {
+            const submissions = getSubmissions();
+            submissions.push(submission);
+            localStorage.setItem('submissions', JSON.stringify(submissions));
+        }
+
+        function displaySubmissions() {
+            const submissions = getSubmissions();
+            
+            if (submissions.length === 0) {
+                submissionsList.innerHTML = '<p class="no-submissions">No submissions yet</p>';
+                return;
+            }
+
+            submissionsList.innerHTML = submissions.map((sub, index) => `
+                <div class="submission-item">
+                    <strong>#${index + 1}</strong><br>
+                    Name: ${sub.name}<br>
+                    Email: ${sub.email}<br>
+                    Phone: ${sub.phone}
+                </div>
+            `).join('');
+        }
+
+        function clearSubmissions() {
+            localStorage.removeItem('submissions');
+            displaySubmissions();
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const phone = phoneInput.value.trim();
+            const password = passwordInput.value;
+
+            const isNameValid = validateName(name);
+            const isEmailValid = validateEmail(email);
+            const isPhoneValid = validatePhone(phone);
+            const isPasswordValid = validatePassword(password);
+
+            nameInput.classList.toggle('invalid', !isNameValid);
+            nameError.classList.toggle('show', !isNameValid);
+            
+            emailInput.classList.toggle('invalid', !isEmailValid);
+            emailError.classList.toggle('show', !isEmailValid);
+            
+            phoneInput.classList.toggle('invalid', !isPhoneValid);
+            phoneError.classList.toggle('show', !isPhoneValid);
+            
+            passwordInput.classList.toggle('invalid', !isPasswordValid);
+            passwordError.classList.toggle('show', !isPasswordValid);
+
+            if (isNameValid && isEmailValid && isPhoneValid && isPasswordValid) {
+                const submission = {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    password: password,
+                    timestamp: new Date().toISOString()
+                };
+
+                saveSubmission(submission);
+                displaySubmissions();
+
+                form.reset();
+                
+                [nameInput, emailInput, phoneInput, passwordInput].forEach(input => {
+                    input.classList.remove('valid', 'invalid');
+                });
+                
+                strengthBar.className = 'password-strength-bar';
+                strengthBar.style.width = '0';
+                strengthText.textContent = '';
+
+                alert('Registration successful!');
+            }
+        });
+
+        clearBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear all submissions?')) {
+                clearSubmissions();
+            }
+        });
+
+        displaySubmissions();
+    </script>
+</body>
+</html>
+
