@@ -146,26 +146,7 @@ button {
     background: var(--accent-light);
 }
 
-/* ── HERO ── */
-.hero {
-    background: linear-gradient(135deg, #1e1b4b, #312e81);
-    color: #fff;
-    padding: 48px 24px;
-    text-align: center;
-}
-
-.hero h1 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    font-weight: 700;
-    margin-bottom: 12px;
-}
-
-.hero p {
-    font-size: 1rem;
-    color: #a5b4fc;
-    max-width: 520px;
-    margin: 0 auto;
-}
+/* ── HERO ── removed */
 
 /* ── NEWS SECTION ── */
 .news-section {
@@ -321,101 +302,7 @@ button {
     opacity: .65;
 }
 
-/* ── SKELETON ── */
-.skeleton-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-}
-
-.skel-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-}
-
-.skel-card__body {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.skel-card__foot {
-    padding: 12px 20px;
-    border-top: 1px solid var(--border);
-    background: #fafbfc;
-    display: flex;
-    justify-content: space-between;
-}
-
-.skel {
-    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.4s infinite;
-    border-radius: 4px;
-}
-
-@keyframes shimmer {
-    from {
-        background-position: 200% 0;
-    }
-
-    to {
-        background-position: -200% 0;
-    }
-}
-
-.skel-h {
-    height: 16px;
-}
-
-.skel-sm {
-    height: 11px;
-}
-
-.skel-w90 {
-    width: 90%;
-}
-
-.skel-w60 {
-    width: 60%;
-}
-
-.skel-w40 {
-    width: 40%;
-}
-
-.skel-btn {
-    height: 28px;
-    width: 80px;
-    border-radius: 999px;
-}
-
-/* ── STATES ── */
-.state-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    padding: 60px 24px;
-    text-align: center;
-}
-
-.state-icon {
-    font-size: 2.5rem;
-}
-
-.state-box h2 {
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-
-.state-box p {
-    color: var(--text-muted);
-    max-width: 360px;
-}
+/* ── SKELETON & STATES ── Removed */
 
 /* ── FOOTER ── */
 .footer {
@@ -448,9 +335,7 @@ button {
         max-width: unset;
     }
 
-    .hero {
-        padding: 36px 16px;
-    }
+    /* .hero removed */
 
     .news-section {
         padding: 24px 0 16px;

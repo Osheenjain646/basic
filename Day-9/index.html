@@ -17,7 +17,7 @@
     <!-- NAVBAR -->
     <header class="navbar">
         <div class="container navbar__inner">
-            <a href="#" class="navbar__brand">🚀 Startup News</a>
+            <a href="#" class="navbar__brand">Startup News</a>
             <div class="navbar__search">
                 <input type="search" id="search-input" placeholder="Search stories…" aria-label="Search" />
                 <button id="search-btn" aria-label="Search">
@@ -40,38 +40,11 @@
 
     <main>
 
-        <!-- HERO -->
-        <section class="hero">
-            <div class="container">
-                <h1>Latest Startup Discussions</h1>
-                <p>Real-time startup stories, funding news &amp; product launches — pulled from the Hacker News
-                    community.</p>
-            </div>
-        </section>
-
         <!-- NEWS LIST -->
         <section class="news-section">
             <div class="container">
-                <!-- Loading skeleton -->
-                <div class="skeleton-grid" id="skeleton-grid"></div>
-
                 <!-- Cards -->
-                <div class="news-grid" id="news-grid" hidden></div>
-
-                <!-- Error -->
-                <div class="state-box" id="error-state" hidden>
-                    <p class="state-icon">⚠️</p>
-                    <h2>Failed to load stories</h2>
-                    <p id="error-msg">Please try again.</p>
-                    <button class="btn btn--primary" id="retry-btn">Retry</button>
-                </div>
-
-                <!-- Empty -->
-                <div class="state-box" id="empty-state" hidden>
-                    <p class="state-icon">🔍</p>
-                    <h2>No results found</h2>
-                    <p>Try a different search term.</p>
-                </div>
+                <div class="news-grid" id="news-grid"></div>
             </div>
         </section>
 

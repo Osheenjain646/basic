@@ -1,9 +1,6 @@
-
-
 /* ── CONFIG ── */
 const API_BASE = 'https://hn.algolia.com/api/v1/search';
 const HITS_PER_PAGE = 9;
-const SKELETONS = 6;
 
 /* ── STATE ── */
 let query = 'startup';
@@ -13,11 +10,6 @@ let searchTimer = null;
 
 /* ── ELEMENTS ── */
 const newsGrid = document.getElementById('news-grid');
-const skeletonGrid = document.getElementById('skeleton-grid');
-const errorState = document.getElementById('error-state');
-const emptyState = document.getElementById('empty-state');
-const errorMsg = document.getElementById('error-msg');
-const retryBtn = document.getElementById('retry-btn');
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-btn');
 const navLinks = document.querySelectorAll('.nav-link');
@@ -38,47 +30,6 @@ function timeAgo(iso) {
     if (h < 24) return h + 'h ago';
     if (d < 7) return d + 'd ago';
     return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-}
-
-/* ── SKELETON ── */
-function showSkeletons() {
-    skeletonGrid.innerHTML = Array.from({ length: SKELETONS }, () => `
-    <div class="skel-card">
-      <div class="skel-card__body">
-        <div class="skel skel-h skel-w90"></div>
-        <div class="skel skel-h skel-w60"></div>
-        <div class="skel skel-sm skel-w40"></div>
-      </div>
-      <div class="skel-card__foot">
-        <div class="skel skel-sm skel-w40"></div>
-        <div class="skel skel-btn"></div>
-      </div>
-    </div>
-  `).join('');
-    skeletonGrid.hidden = false;
-}
-
-function hideSkeletons() {
-    skeletonGrid.hidden = true;
-    skeletonGrid.innerHTML = '';
-}
-
-/* ── STATES ── */
-function showError(msg) {
-    hideSkeletons();
-    newsGrid.hidden = emptyState.hidden = true;
-    errorMsg.textContent = msg || 'Something went wrong.';
-    errorState.hidden = false;
-}
-function showEmpty() {
-    hideSkeletons();
-    newsGrid.hidden = errorState.hidden = true;
-    emptyState.hidden = false;
-}
-function showGrid() {
-    hideSkeletons();
-    errorState.hidden = emptyState.hidden = true;
-    newsGrid.hidden = false;
 }
 
 /* ── CARD ── */
@@ -113,8 +64,6 @@ function buildCard(hit, index) {
 }
 
 function renderAll() {
-    if (!allHits.length) { showEmpty(); return; }
-    showGrid();
     newsGrid.innerHTML = allHits.map((h, i) => buildCard(h, i)).join('');
 }
 
@@ -125,19 +74,16 @@ async function fetchStories(q) {
     return r.json();
 }
 
-async function loadInitial() {
+async function loadData() {
     if (isLoading) return;
     isLoading = true;
-    allHits = [];
-    newsGrid.innerHTML = '';
-    newsGrid.hidden = errorState.hidden = emptyState.hidden = true;
-    showSkeletons();
+    newsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Loading...</p>';
     try {
         const data = await fetchStories(query);
         allHits = data.hits || [];
-        allHits.length ? renderAll() : showEmpty();
+        renderAll();
     } catch (e) {
-        showError(e.message);
+        newsGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Failed to load: ${e.message}</p>`;
     } finally {
         isLoading = false;
     }
@@ -148,7 +94,7 @@ function doSearch(val) {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
         query = val.trim() || 'startup';
-        loadInitial();
+        loadData();
     }, 450);
 }
 
@@ -157,13 +103,13 @@ searchInput.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
         clearTimeout(searchTimer);
         query = searchInput.value.trim() || 'startup';
-        loadInitial();
+        loadData();
     }
 });
 searchBtn.addEventListener('click', () => {
     clearTimeout(searchTimer);
     query = searchInput.value.trim() || 'startup';
-    loadInitial();
+    loadData();
 });
 
 /* ── NAV LINKS ── */
@@ -174,11 +120,9 @@ navLinks.forEach(link => {
         link.classList.add('active');
         query = link.dataset.query;
         searchInput.value = query;
-        loadInitial();
+        loadData();
     });
 });
 
-retryBtn.addEventListener('click', loadInitial);
-
 /* ── INIT ── */
-loadInitial();
+loadData();
