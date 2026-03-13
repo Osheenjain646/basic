@@ -1,0 +1,313 @@
+/* Gemini AI Chat Panel Styles - Modern Design Inspired by Day-9 Tokens */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #4285f4; /* Gemini Blue */
+  --primary-dark: #3367d6;
+  --accent: #34a853; /* Green accent */
+  --text: #202124;
+  --text-muted: #5f6368;
+  --bg: #fafbfc;
+  --surface: #ffffff;
+  --border: #dadce0;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+  --radius: 12px;
+  --transition: all 0.2s ease;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+  height: 100vh;
+}
+
+/* Header */
+#header-section {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 1rem 0;
+  box-shadow: var(--shadow-lg);
+  flex-shrink: 0;
+}
+
+#container {
+  max-width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#header-section h1 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* Response Section - Chat Area */
+#response-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 2rem;
+  overflow-y: auto;
+}
+
+/* Messages container — vertical stack, top-to-bottom */
+#messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  justify-content: flex-start;
+}
+
+#response-section h1 {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  text-align: center;
+  font-weight: 400;
+  max-width: 80%;
+}
+
+/* User Input Section - Fixed Bottom */
+#user-section {
+  padding: 1.5rem;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  flex-shrink: 0;
+}
+
+#input-section {
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  max-width: 100%;
+}
+
+#input-search {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition);
+  background: var(--bg);
+}
+
+#input-search:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+}
+
+#input-search::placeholder {
+  color: var(--text-muted);
+}
+
+/* Send & Clear Buttons */
+#send-btn, #clear-btn {
+  position: static;
+  border: none;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition);
+  font-size: 1rem;
+  height: fit-content;
+  white-space: nowrap;
+}
+
+#send-btn {
+  background: var(--primary);
+  color: white;
+  flex-shrink: 0;
+}
+
+#send-btn:hover {
+  background: var(--primary-dark);
+}
+
+#clear-btn {
+  background: #fbbc04;
+  color: white;
+  flex-shrink: 0;
+}
+
+#clear-btn:hover {
+  background: #f4b400;
+}
+
+
+
+/* Footer */
+#footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+#footer p {
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  body {
+    max-width: 100%;
+  }
+
+  #header-section h1 {
+    font-size: 1.5rem;
+  }
+
+  #response-section {
+    padding: 1rem;
+  }
+
+  #response-section h1 {
+    font-size: 1.2rem;
+  }
+
+  #user-section {
+    padding: 1rem;
+  }
+}
+
+/* ── Chat Messages — Gemini-style ── */
+
+.message {
+  width: 100%;
+  margin-bottom: 0.25rem;
+  animation: fadeIn 0.2s ease;
+}
+
+/* USER: compact right-aligned pill, extra top gap to separate turns */
+.message--user {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.25rem 0;
+  margin-top: 1.5rem;
+}
+
+.message--user .message-bubble {
+  background: #e8f0fe;
+  color: var(--text);
+  border-radius: 20px 20px 4px 20px;
+  padding: 0.65rem 1.1rem;
+  max-width: 70%;
+  font-size: 0.97rem;
+  line-height: 1.55;
+  word-wrap: break-word;
+}
+
+/* AI: no bubble — plain text, left-aligned with Gemini star avatar */
+.message--ai {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.5rem 0;
+  max-width: 92%;
+}
+
+.message--ai .message-avatar {
+  /* Gemini-style colourful star icon */
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+  background: linear-gradient(135deg, #4285f4 0%, #9b59b6 40%, #ea4335 70%, #fbbc04 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: white;
+  font-style: normal;
+}
+
+.message--ai .message-content {
+  flex: 1;
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: var(--text);
+  word-wrap: break-word;
+  padding-bottom: 0.25rem;
+}
+
+/* hide user avatar (Gemini shows no icon for user) */
+.message--user .message-avatar {
+  display: none;
+}
+
+/* Typing indicator dots */
+.message--ai .message-content.typing::after {
+  content: "●●●";
+  font-size: 0.5rem;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  vertical-align: middle;
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Welcome message */
+.welcome-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1rem 0 1.5rem 0;
+}
+
+/* Scrollbar */
+#response-section::-webkit-scrollbar {
+  width: 6px;
+}
+
+#response-section::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+#response-section::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+#response-section::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
